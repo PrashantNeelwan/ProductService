@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.ArrayList;
+
 @RestController         // why not @Controller, as this will tell spring that these will be REST API,s
 @RequestMapping("/products")
 public class ProductController {
@@ -39,9 +42,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public void getAllProducts(){
+    public List<GenericProductDto> getAllProducts(){
+        // should returns list of generic prodcutDtos
 
-
+            return   productService.getAllProducts();
     }
 
     @DeleteMapping("/{id}")
@@ -49,9 +53,14 @@ public class ProductController {
 
 
     }
-
-    public void createProduct(){
-
+    @PostMapping
+    public GenericProductDto createProduct(@RequestBody GenericProductDto genericProductDto){
+    //@RequestBody means that this object will come in the request in the body of the request
+        // pic that body of request and map it to this object
+        // we have something as request body for GET Method
+        // ans response body for POST method
+    // we also need to add id,
+        return productService.createProduct(genericProductDto);
 
     }
 

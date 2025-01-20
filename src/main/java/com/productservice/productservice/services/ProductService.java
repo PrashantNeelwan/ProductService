@@ -4,6 +4,7 @@ package com.productservice.productservice.services;
 import com.productservice.productservice.dtos.FakeStoreProductDto;
 import com.productservice.productservice.dtos.GenericProductDto;
 
+import java.util.List;
 //why product Service should be an interface and not a class
 //because : in projectController we will need a object of Product service
 // so first if two classes are dependent on one object : Design Principle of Dependency Inversion is violated
@@ -15,9 +16,9 @@ public interface ProductService {
     // we can not create objects for interface
     GenericProductDto getProductById(Long id);
 
-    void getAllProducts();
+    List<GenericProductDto> getAllProducts();
 
-    void createProduct();
+    GenericProductDto createProduct(GenericProductDto genericProductDto);
 
     void updateProductById();
 
