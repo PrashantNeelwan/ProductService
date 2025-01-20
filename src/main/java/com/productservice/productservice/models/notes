@@ -1,0 +1,3 @@
+models is representing tables in the database
+ models is like fundamental objects
+ .. if something is changing on outside world it should not impact the models

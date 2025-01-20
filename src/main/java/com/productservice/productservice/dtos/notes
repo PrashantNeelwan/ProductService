@@ -1,0 +1,5 @@
+DTO : Data Transfer Object
+
+these are objects use to transfer data from backend system to client and vice verca.
+
+// so , DTO should have all the same attributes as the request from the client.
