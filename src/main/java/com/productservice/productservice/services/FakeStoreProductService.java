@@ -3,6 +3,7 @@ package com.productservice.productservice.services;
 
 import com.productservice.productservice.dtos.FakeStoreProductDto;
 import com.productservice.productservice.dtos.GenericProductDto;
+import com.productservice.productservice.exceptions.ProductNotFoundException;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public GenericProductDto getProductById(Long id) {
+    public GenericProductDto getProductById(Long id) throws ProductNotFoundException {
         //Integrate the FakeStore API.
         //RestTemplate
         //RequestTemplate : helps you to make calls with the external system.
@@ -60,12 +61,18 @@ public class FakeStoreProductService implements ProductService{
 
 
         // inspite of directly contact with FakeSotreProductDto, if api changes its attributes, we
-        // we can one mare layet between FakeStoreProductService and Fakestore porduct Dto i.e GenericProductDto
+        // we can one mare layer between FakeStoreProductService and Fakestore porduct Dto i.e GenericProductDto
 
-        //convert FakeProductServieDto to GenericProductDto
+        //convert FakeProductServiceDto to GenericProductDto
 
-
-
+        FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
+        // Exception Handling
+        // We create a custom exception class
+        if(fakeStoreProductDto == null)
+        {
+            // Throw an exception
+            throw  new ProductNotFoundException("Product with id :" + id + " doesn't exist");
+        }
         return convertToGenericProductDto(responseEntity.getBody());
 
 

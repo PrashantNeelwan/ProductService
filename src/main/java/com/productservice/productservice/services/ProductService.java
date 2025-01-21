@@ -3,6 +3,7 @@ package com.productservice.productservice.services;
 
 import com.productservice.productservice.dtos.FakeStoreProductDto;
 import com.productservice.productservice.dtos.GenericProductDto;
+import com.productservice.productservice.exceptions.ProductNotFoundException;
 
 import java.util.List;
 //why product Service should be an interface and not a class
@@ -14,7 +15,7 @@ public interface ProductService {
 
     // by default all the methods of interface are public
     // we can not create objects for interface
-    GenericProductDto getProductById(Long id);
+    GenericProductDto getProductById(Long id) throws ProductNotFoundException;
 
     List<GenericProductDto> getAllProducts();
 

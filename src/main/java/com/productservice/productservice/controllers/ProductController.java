@@ -4,16 +4,20 @@ package com.productservice.productservice.controllers;
 // we are saying to spring, to create an object of these classes at the time of initilisatoin
 
 
+import com.productservice.productservice.dtos.ExceptionDto;
 import com.productservice.productservice.dtos.FakeStoreProductDto;
 import com.productservice.productservice.dtos.GenericProductDto;
+import com.productservice.productservice.exceptions.ProductNotFoundException;
 import com.productservice.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.rmi.server.ExportException;
 import java.util.List;
 import java.util.ArrayList;
-
 @RestController         // why not @Controller, as this will tell spring that these will be REST API,s
 @RequestMapping("/products")
 public class ProductController {
@@ -34,7 +38,7 @@ public class ProductController {
 
     //localhost:8080/products/12345
     @GetMapping("/{id}")
-    public GenericProductDto getProductById(@PathVariable("id") Long id){
+    public GenericProductDto getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
             //implementation
         // from the FakeStore ProductService call the getProductById() method
             return productService.getProductById(id);
@@ -72,6 +76,21 @@ public class ProductController {
     }
 
 
+    // we need to create a method for every exception method created
+//    @ExceptionHandler(ProductNotFoundException.class)
+//        private ResponseEntity<ExceptionDto> handleProductNotFoundException (ProductNotFoundException productNotFoundException){
+//        // this method automatically trigger when there is this exception
+//        // its private
+//        ExceptionDto exceptionDto = new ExceptionDto();
+//        exceptionDto.setMessage(productNotFoundException.getMessage());
+//        exceptionDto.setHttpStatus(HttpStatus .NOT_FOUND);
+//
+//        // changing the 202 OK to 404 not found
+//        ResponseEntity responseEntity = new ResponseEntity(exceptionDto, HttpStatus.NOT_FOUND);
+//
+//        return responseEntity;
+//
+//    }
 }
 
 
