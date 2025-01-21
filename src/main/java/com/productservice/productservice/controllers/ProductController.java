@@ -49,9 +49,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProductById(){
-
-
+    public GenericProductDto deleteProductById(@PathVariable("id") Long id){
+        return productService.deleteProductById(id);
     }
     @PostMapping
     public GenericProductDto createProduct(@RequestBody GenericProductDto genericProductDto){
@@ -64,10 +63,12 @@ public class ProductController {
 
     }
 
+    @PatchMapping("/{id}")
+    public void updateProductById(@PathVariable("id") Long id){
+    // you need request parameter {id} and response body as well.
 
-    public void updateProductById(){
 
-
+        //return the updated complete object
     }
 
 

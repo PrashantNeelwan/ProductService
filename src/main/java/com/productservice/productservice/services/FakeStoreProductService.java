@@ -4,8 +4,11 @@ package com.productservice.productservice.services;
 import com.productservice.productservice.dtos.FakeStoreProductDto;
 import com.productservice.productservice.dtos.GenericProductDto;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RequestCallback;
+import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -105,7 +108,33 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
+    public GenericProductDto deleteProductById(Long id) {
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        // restTemplate.delete(); .. this method does not return anything as its return type is void;
+
+        // Changing the get Entity method to behave as DELETE for us and return
+
+        // Inbuildt getEnitity method
+//        RequestCallback requestCallback = this.acceptHeaderRequestCallback(responseType);
+//        ResponseExtractor<ResponseEntity<T>> responseExtractor = this.responseEntityExtractor(responseType);
+//        return (ResponseEntity)nonNull((ResponseEntity)this.execute(url, HttpMethod.GET, requestCallback, responseExtractor, uriVariables));
+
+        RequestCallback requestCallback = restTemplate.acceptHeaderRequestCallback(FakeStoreProductDto.class);
+        ResponseExtractor<ResponseEntity<FakeStoreProductDto>> responseExtractor =
+                restTemplate.responseEntityExtractor(FakeStoreProductDto.class);
+        ResponseEntity<FakeStoreProductDto> responseEntity =
+                restTemplate.execute(specificProductUrl, HttpMethod.DELETE, requestCallback, responseExtractor, id);
+
+        return convertToGenericProductDto(responseEntity.getBody());
+
+    }
+
+
+    @Override
     public void updateProductById() {
+        // do this yourself
+        // steps
+        // 1) take an id in the controller. it will be a patch call
 
     }
 }
